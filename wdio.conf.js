@@ -5,8 +5,9 @@ export const config = {
     runner: 'local',
 
     specs: [
-        './test/specs/light-theme.controls.spec.js',
-        './test/specs/array-list.spec.js',
+        // './test/specs/light-theme.controls.spec.js',
+        // './test/specs/array-list.spec.js',
+        './test/specs/date-picker-dialog.spec.js',
     ],
 
     exclude: [],
@@ -18,12 +19,15 @@ export const config = {
 
         'appium:automationName': 'UiAutomator2',
         'appium:deviceName': 'emulator-5554',
-        'appium:platformVersion': '11.0', 
+        'appium:platformVersion': '11.0',
         'appium:udid': 'emulator-5554',
+        'appium:app': 'C:/Users/Hp/Downloads/ApiDemos-debug.apk',  // ← Add this
+
         'appium:appPackage': 'io.appium.android.apis',
         'appium:appActivity': '.ApiDemos',
         'appium:autoGrantPermissions': true,
         'appium:noReset': false,
+
 
     }],
 
