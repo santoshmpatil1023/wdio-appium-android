@@ -5,8 +5,8 @@ export const config = {
     runner: 'local',
 
     specs: [
-        // './test/specs/light-theme.controls.spec.js',
-        // './test/specs/array-list.spec.js',
+        './test/specs/light-theme.controls.spec.js',
+        './test/specs/array-list.spec.js',
         './test/specs/date-picker-dialog.spec.js',
     ],
 
@@ -27,6 +27,8 @@ export const config = {
         'appium:appActivity': '.ApiDemos',
         'appium:autoGrantPermissions': true,
         'appium:noReset': false,
+        'appium:noReset': false,
+        // 'appium:fullReset': true,
 
 
     }],

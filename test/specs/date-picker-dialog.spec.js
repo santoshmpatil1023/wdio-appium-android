@@ -18,6 +18,8 @@ const datePickerOk = () => $('id:android:id/button1')
 async function openDateDialogScreen() {
     await browser.startActivity(PACKAGE, '.ApiDemos')
 
+    await browser.pause(2000)
+
     const views = await menuItem('Views')
     await views.waitForDisplayed({ timeout: 15000 })
     await views.click()

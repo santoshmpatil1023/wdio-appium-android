@@ -17,6 +17,9 @@ const radioOn = () => $(`id:${PACKAGE}:id/radio1`)
 async function openLightThemeScreen() {
     await browser.startActivity(PACKAGE, '.ApiDemos')
 
+    await browser.pause(2000)
+
+
     const views = await menuItem('Views')
     await views.waitForDisplayed({ timeout: 15000 })
     await views.click()
