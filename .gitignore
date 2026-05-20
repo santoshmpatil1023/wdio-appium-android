@@ -1,32 +1,6 @@
-# Node modules
 node_modules/
-
-# Logs
 logs/
-*.log
-npm-debug.log*
-
-# Test reports
-reports/
 allure-results/
 allure-report/
-
-# Environment variables
 .env
-.env.local
-
-# OS files
-.DS_Store
-Thumbs.db
-
-# IDE files
-.vscode/
-.idea/
-*.swp
-
-# Appium temp files
-*.tmp
-
-# Screenshots (if any)
-screenshots/
-*.png
+*.log

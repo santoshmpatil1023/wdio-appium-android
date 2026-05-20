@@ -4,7 +4,10 @@ export const config = {
 
     runner: 'local',
 
-    specs: ['./test/specs/light-theme.controls.spec.js'],
+    specs: [
+        './test/specs/light-theme.controls.spec.js',
+        './test/specs/array-list.spec.js',
+    ],
 
     exclude: [],
 

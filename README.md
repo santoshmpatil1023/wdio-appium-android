@@ -22,9 +22,9 @@ adb devices
 npm install
 ```
 
-## Run Day 3 tests
+## Run tests
 
-1. Start your Android emulator.
+1. Start your Android emulator (must match `udid` / `deviceName` in `wdio.conf.js` if you hardcode them).
 2. Run:
 
 ```powershell
@@ -38,14 +38,27 @@ $env:ANDROID_DEVICE_NAME = "emulator-5554"
 npm test
 ```
 
+## Day 4 scenario (Array / Matocq)
+
+**Path:** ApiDemos → Views → (scroll) Lists → 01. Array
+
+| Test | What it does |
+|------|----------------|
+| Scroll + tap | `UiScrollable.scrollIntoView` until **Matocq** is visible, tap, assert we remain on the same `01. Array` screen |
+| Scroll back up | After scrolling to Matocq, `scrollIntoView` **Aruba** (first row in your build) and assert it is displayed |
+
+Spec file: `test/specs/array-list.spec.js`
+
+This app build shows no visible post-click transition/toast for this row, so the assertion uses a same-screen anchor element.
+
 ## Day 3 scenario
 
 **Path:** ApiDemos → Views → Controls → 1. Light Theme
 
 | Test | What it does |
 |------|----------------|
-| Positive | Types in the field, checks the box, clicks Toggle, asserts Radio 2 is selected |
-| Negative | Leaves the field empty; asserts defaults, then checkbox + toggle still behave |
+| Positive | Text field, checkbox, radio selection flow (see spec for exact steps) |
+| Negative | Empty text field; controls still behave as expected |
 
 Spec file: `test/specs/light-theme.controls.spec.js`
 
@@ -61,4 +74,3 @@ Spec file: `test/specs/light-theme.controls.spec.js`
 ## Project docs
 
 - [Day 1 — Appium architecture](docs/day1-appium-architecture.md)
-- [Day 2 — Inspector and locators](docs/day2-appium-inspector-locators.md)
