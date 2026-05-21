@@ -1,76 +1,130 @@
-# WDIO + Appium Android (Learning Program)
+# WDIO + Appium Android
 
-WebdriverIO + Appium 2.x automation for **ApiDemos** on a local Android emulator.
+Week 1 — ApiDemos automation with **WebdriverIO + Appium (UiAutomator2)**.  
+Flat specs only (no Page Object Model yet).
+
+---
 
 ## Prerequisites
 
-- Node.js LTS
-- JDK 17 (`JAVA_HOME` set)
-- Android SDK (`ANDROID_HOME` set) and an emulator (API 30+)
-- **ApiDemos** installed: `adb install ApiDemos-debug.apk`
-- UiAutomator2 driver: `appium driver install uiautomator2`
+- Node.js (LTS)
+- JDK 17 — `JAVA_HOME` set
+- Android SDK — `ANDROID_HOME` set
+- Android emulator (API 30+, e.g. Pixel 5)
+- Appium 2.x + UiAutomator2 driver:
 
-Verify device:
+```powershell
+npm install -g appium
+appium driver install uiautomator2
+```
+
+- ApiDemos APK — [releases](https://github.com/appium/android-apidemos/releases)
 
 ```powershell
 adb devices
+adb install ApiDemos-debug.apk
 ```
 
-## Install
+---
+
+## Setup
 
 ```powershell
+git clone <your-repo-url>
+cd wdio-appium-android
 npm install
 ```
 
+Update `wdio.conf.js` if needed:
+
+| Setting | Default |
+|---------|---------|
+| `appium:udid` | `emulator-5554` |
+| `appium:deviceName` | `emulator-5554` |
+| `appium:platformVersion` | `11.0` |
+| `appium:app` | path to your `ApiDemos-debug.apk` |
+| `appium:appPackage` | `io.appium.android.apis` |
+| `appium:appActivity` | `.ApiDemos` |
+
+Start the emulator before running tests.
+
+---
+
 ## Run tests
 
-1. Start your Android emulator (must match `udid` / `deviceName` in `wdio.conf.js` if you hardcode them).
-2. Run:
+**Full Week 1 suite** — uncomment all specs in `wdio.conf.js`:
+
+```js
+specs: [
+    './test/specs/light-theme.controls.spec.js',
+    './test/specs/array-list.spec.js',
+    './test/specs/date-picker-dialog.spec.js',
+],
+```
 
 ```powershell
 npm test
 ```
 
-Optional — custom AVD / device name:
+**Single spec file** — comment out the other two in `wdio.conf.js`, then:
 
 ```powershell
-$env:ANDROID_DEVICE_NAME = "emulator-5554"
 npm test
 ```
 
-## Day 4 scenario (Array / Matocq)
+Or:
 
-**Path:** ApiDemos → Views → (scroll) Lists → 01. Array
+```powershell
+npx wdio run ./wdio.conf.js --spec test/specs/light-theme.controls.spec.js
+```
 
-| Test | What it does |
-|------|----------------|
-| Scroll + tap | `UiScrollable.scrollIntoView` until **Matocq** is visible, tap, assert we remain on the same `01. Array` screen |
-| Scroll back up | After scrolling to Matocq, `scrollIntoView` **Aruba** (first row in your build) and assert it is displayed |
+---
 
-Spec file: `test/specs/array-list.spec.js`
+## Week 1 — Scenarios (no POM)
 
-This app build shows no visible post-click transition/toast for this row, so the assertion uses a same-screen anchor element.
+| Day | Spec | Path in app |
+|-----|------|-------------|
+| 3 | `light-theme.controls.spec.js` | Views → Controls → 1. Light Theme |
+| 4 | `array-list.spec.js` | Views → Lists → 01. Array |
+| 5 | `date-picker-dialog.spec.js` | Views → Date Widgets → 1. Dialog |
 
-## Day 3 scenario
+**Day 3** — enter text, toggle checkbox, change radio; negative test with empty text field.
 
-**Path:** ApiDemos → Views → Controls → 1. Light Theme
+**Day 4** — scroll to Matocq, tap, verify list screen; scroll back to top.
 
-| Test | What it does |
-|------|----------------|
-| Positive | Text field, checkbox, radio selection flow (see spec for exact steps) |
-| Negative | Empty text field; controls still behave as expected |
+**Day 5** — set date to 15 March 2027; set time to 09:30 AM (native picker UI).
 
-Spec file: `test/specs/light-theme.controls.spec.js`
+---
+
+## Project layout
+
+```
+wdio.conf.js
+test/specs/          # flat test files (selectors + flows here)
+docs/                # Day 1 & Day 2 notes
+```
+
+---
 
 ## Troubleshooting
 
 | Issue | Fix |
 |-------|-----|
-| No device | Boot emulator; run `adb devices` |
-| App not installed | Install ApiDemos APK (see `docs/` / program appendix) |
-| Wrong activity | Capabilities use `appPackage` `io.appium.android.apis` and `appActivity` `.ApiDemos` |
-| Element not found | Open **Appium Inspector** on the Light Theme screen and adjust resource ids in the spec |
+| No device | Start emulator → `adb devices` |
+| Wrong device | Match `udid` in `wdio.conf.js` |
+| App not found | Install APK or fix `appium:app` path |
+| Suite fails, single file passes | Run full suite with all specs enabled; each spec uses `startActivity` in `beforeEach` / `before` |
+| Element not found | Use Appium Inspector; check locators in the spec |
 
-## Project docs
+---
+
+## Learning notes
 
 - [Day 1 — Appium architecture](docs/day1-appium-architecture.md)
+- [Day 2 — Inspector & locators](docs/day2-appium-inspector-locators.md)
+
+---
+
+## Week 2 (coming)
+
+Page Object Model, shared config/utils, Allure reporting, Wikipedia E2E — to be added in this repo.
