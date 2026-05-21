@@ -2,5 +2,6 @@ node_modules/
 logs/
 allure-results/
 allure-report/
+reports/
 .env
 *.log

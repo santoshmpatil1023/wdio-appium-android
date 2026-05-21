@@ -99,9 +99,19 @@ npx wdio run ./wdio.conf.js --spec test/specs/light-theme.controls.spec.js
 ## Project layout
 
 ```
-wdio.conf.js
-test/specs/          # flat test files (selectors + flows here)
-docs/                # Day 1 & Day 2 notes
+wdio.conf.js              # Week 1 runner
+config/
+  app.config.js           # caps via env vars
+  wdio.pom.conf.js        # Week 2 POM runner
+test/
+  specs/                  # Week 1 flat specs (unchanged)
+  specs/pom/              # Week 2 specs (no selectors)
+  pageobjects/            # BasePage + feature pages
+  data/                   # JSON fixtures
+utils/
+helpers/
+reports/screenshots/      # on failure (POM suite)
+docs/
 ```
 
 ---
@@ -125,6 +135,26 @@ docs/                # Day 1 & Day 2 notes
 
 ---
 
-## Week 2 (coming)
+## Week 2 — POM suite
 
-Page Object Model, shared config/utils, Allure reporting, Wikipedia E2E — to be added in this repo.
+```powershell
+npm run test:pom
+```
+
+Env overrides (optional):
+
+```powershell
+$env:ANDROID_UDID = "emulator-5554"
+$env:APK_PATH = "C:/path/to/ApiDemos-debug.apk"
+npm run test:pom
+```
+
+| Spec | Page object |
+|------|-------------|
+| `test/specs/pom/light-theme.spec.js` | `LightThemePage` |
+| `test/specs/pom/array-list.spec.js` | `ArrayListPage` |
+| `test/specs/pom/date-picker.spec.js` | `DateWidgetsDialogPage` |
+
+Week 1 flat specs in `test/specs/` are **not modified**. Use `npm test` for Week 1.
+
+**Next:** Allure reporter, custom commands (`helpers/commands.js`), Wikipedia E2E.

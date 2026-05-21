@@ -57,7 +57,7 @@ describe('ApiDemos — Views > Lists > 01. Array (Day 4)', () => {
 
         // Mini-assignment: scroll back to top reliably
         await $(
-            'android=new UiScrollable(new UiSelector().scrollable(true)).scrollToBeginning(10)'
+            'android=new UiScrollable(new UiSelector().scrollable(true)).scrollToBeginning(13)'
         )
 
         // Verify we are at top without relying on build/locale specific text

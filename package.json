@@ -12,6 +12,8 @@
   },
   "scripts": {
     "test": "wdio run ./wdio.conf.js",
+    "test:week1": "wdio run ./wdio.conf.js",
+    "test:pom": "wdio run ./config/wdio.pom.conf.js",
     "wdio": "wdio run ./wdio.conf.js"
   }
 }
