@@ -1,10 +1,6 @@
 import { $, browser } from '@wdio/globals'
 import { scrollIntoViewByText } from '../utils/scroll.js'
 
-/**
- * Register project-wide custom WDIO commands on browser.
- * Call once from wdio.pom.conf.js `before` hook.
- */
 export function registerCustomCommands() {
     browser.addCommand(
         'scrollUntilVisible',

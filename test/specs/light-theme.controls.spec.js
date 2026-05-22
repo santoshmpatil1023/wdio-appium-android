@@ -1,10 +1,5 @@
 import { expect, $, browser } from '@wdio/globals'
 
-/**
- * Day 3 — ApiDemos > Views > Controls > 1. Light Theme
- * Intentionally flat (no Page Object Model yet).
- */
-
 const PACKAGE = 'io.appium.android.apis'
 
 const menuItem = (label) => $(`android=new UiSelector().text("${label}")`)
@@ -18,7 +13,6 @@ async function openLightThemeScreen() {
     await browser.startActivity(PACKAGE, '.ApiDemos')
 
     await browser.pause(2000)
-
 
     const views = await menuItem('Views')
     await views.waitForDisplayed({ timeout: 15000 })
@@ -35,13 +29,11 @@ async function openLightThemeScreen() {
     await editField().waitForDisplayed({ timeout: 10000 })
 }
 
-// isUnchecked() → true when element is NOT selected
 async function isUnchecked(element) {
     const checked = await element.getAttribute('checked')
     return checked === 'false' || checked === false
 }
 
-// isChecked() → true when element IS selected
 async function isChecked(element) {
     const checked = await element.getAttribute('checked')
     return checked === 'true' || checked === true
@@ -51,12 +43,6 @@ describe('ApiDemos — Views > Controls > 1. Light Theme', () => {
     beforeEach(async () => {
         await openLightThemeScreen()
     })
-
-    //     // Path: ApiDemos > Views > Controls > 1. Light Theme
-    //     // •	Enter text in the text field.
-    //     // •	Toggle the checkbox.
-    //     // •	Click the button.
-    //     // •	Assert that the radio button selection changed.
 
     it('enters text, toggles checkbox, and changes radio selection', async () => {
         const initiallyRadioOff = await isUnchecked(radioOff())
@@ -78,14 +64,9 @@ describe('ApiDemos — Views > Controls > 1. Light Theme', () => {
     })
 
     it('negative: empty text field should not break functionality', async () => {
-        // text field empty and verifying the expected state of dependent UI elements.
-        // validates negative behavior WITHOUT entering text 
-
         const initiallyRadioOff = await isUnchecked(radioOff())
         expect(initiallyRadioOff).toBe(true)
         console.log("Initial state verified")
-
-        // DON'T enter text - leave empty
 
         await checkbox().click()
         console.log("checkbox clicked")

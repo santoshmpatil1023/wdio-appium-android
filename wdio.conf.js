@@ -1,5 +1,3 @@
-// process.env.DEBUG = '*'
-
 export const config = {
 
     runner: 'local',
@@ -21,15 +19,12 @@ export const config = {
         'appium:deviceName': 'emulator-5554',
         'appium:platformVersion': '11.0',
         'appium:udid': 'emulator-5554',
-        'appium:app': 'C:/Users/Hp/Downloads/ApiDemos-debug.apk',  // ← Add this
+        'appium:app': 'C:/Users/Hp/Downloads/ApiDemos-debug.apk',
 
         'appium:appPackage': 'io.appium.android.apis',
         'appium:appActivity': '.ApiDemos',
         'appium:autoGrantPermissions': true,
         'appium:noReset': false,
-        'appium:noReset': false,
-        // 'appium:fullReset': true,
-
 
     }],
 
