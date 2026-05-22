@@ -1,5 +1,5 @@
-import { $ } from '@wdio/globals'
-import { scrollIntoViewByText, scrollToListTop } from '../../utils/scroll.js'
+import { $, browser } from '@wdio/globals'
+import { scrollToListTop } from '../../utils/scroll.js'
 import ApiDemosHomePage from './ApiDemosHomePage.js'
 import BasePage from './BasePage.js'
 
@@ -7,7 +7,7 @@ export default class ArrayListPage extends BasePage {
     home = new ApiDemosHomePage()
 
     listRow(text) {
-        return $(scrollIntoViewByText(text))
+        return browser.scrollUntilVisible(text)
     }
 
     get listContainer() {
@@ -16,10 +16,6 @@ export default class ArrayListPage extends BasePage {
 
     get firstVisibleRow() {
         return $('android=new UiSelector().className("android.widget.TextView").instance(0)')
-    }
-
-    get rowMeira() {
-        return $(`android=new UiSelector().text("Meira")`)
     }
 
     async open() {
@@ -31,14 +27,13 @@ export default class ArrayListPage extends BasePage {
     }
 
     async scrollToAndTapRow(rowText) {
-        const row = await this.listRow(rowText)
-        await row.waitForDisplayed({ timeout: 30000 })
-        await row.isDisplayed()
+        const row = await browser.scrollUntilVisible(rowText, { timeout: 30000 })
+        await row.click()
     }
 
-
-    async clickMeira() {
-        await this.waitAndClick(() => this.rowMeira())
+    async longPressRow(rowText, duration = 2000) {
+        const row = await browser.scrollUntilVisible(rowText, { timeout: 30000 })
+        await browser.longPressElement(row, duration)
     }
 
     async isListDisplayed() {

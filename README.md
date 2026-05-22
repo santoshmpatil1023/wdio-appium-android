@@ -157,4 +157,23 @@ npm run test:pom
 
 Week 1 flat specs in `test/specs/` are **not modified**. Use `npm test` for Week 1.
 
-**Next:** Allure reporter, custom commands (`helpers/commands.js`), Wikipedia E2E.
+### Allure report
+
+```powershell
+npm run test:pom
+npm run allure:report
+npm run allure:open
+```
+
+Results: `allure-results/` → report in `allure-report/`
+
+### Custom commands (`helpers/commands.js`)
+
+| Command | Usage |
+|---------|--------|
+| `browser.scrollUntilVisible('Meira')` | Scroll list until row text is visible |
+| `browser.longPressElement(element, 2000)` | Long press via `mobile: clickGesture` |
+
+Registered in `config/wdio.pom.conf.js` `before` hook. Used in `ArrayListPage`.
+
+**Next:** Wikipedia E2E.

@@ -4,7 +4,7 @@ export const APP = {
 }
 
 export function getAndroidCapabilities() {
-    const udid = process.env.ANDROID_UDID || 'emulator-5556'
+    const udid = process.env.ANDROID_UDID || 'emulator-5554'
 
     return {
         platformName: 'Android',

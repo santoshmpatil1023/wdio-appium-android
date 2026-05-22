@@ -9,8 +9,8 @@ describe('POM — Array List', () => {
     })
 
     it('scrolls to Meira, taps it, and verifies list screen then scrolls to top', async () => {
+        await arrayList.longPressRow('Meira')
         await arrayList.scrollToAndTapRow('Meira')
-        await arrayList.clickMeira();
 
         expect(await arrayList.isListDisplayed()).toBe(true)
 
