@@ -3,6 +3,7 @@ import path from 'path'
 import { fileURLToPath } from 'url'
 import allure from '@wdio/allure-reporter'
 import { baseConfig } from './wdio.base.conf.js'
+import { getWikipediaCapabilities } from './app.config.js'
 import { registerCustomCommands } from '../helpers/commands.js'
 
 const projectRoot = path.join(path.dirname(fileURLToPath(import.meta.url)), '..')
@@ -10,11 +11,8 @@ const allureResultsDir = path.join(projectRoot, 'allure-results')
 
 export const config = {
     ...baseConfig,
-    specs: [
-        path.join(projectRoot, 'test/specs/pom/light-theme.spec.js').replace(/\\/g, '/'),
-        path.join(projectRoot, 'test/specs/pom/array-list.spec.js').replace(/\\/g, '/'),
-        path.join(projectRoot, 'test/specs/pom/date-picker.spec.js').replace(/\\/g, '/'),
-    ],
+    capabilities: [getWikipediaCapabilities()],
+    specs: [path.join(projectRoot, 'test/specs/pom/wikipedia.spec.js').replace(/\\/g, '/')],
     reporters: [
         'spec',
         ['allure', {

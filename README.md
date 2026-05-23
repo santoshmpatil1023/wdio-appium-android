@@ -176,4 +176,20 @@ Results: `allure-results/` → report in `allure-report/`
 
 Registered in `config/wdio.pom.conf.js` `before` hook. Used in `ArrayListPage`.
 
-**Next:** Wikipedia E2E.
+### Wikipedia E2E (Day 9)
+
+Install [Wikipedia APK](https://f-droid.org/packages/org.wikipedia/) on the emulator, then:
+
+```powershell
+$env:WIKIPEDIA_APK_PATH = "C:/path/to/wikipedia.apk"
+npm run test:wikipedia
+```
+
+| Page object | Role |
+|-------------|------|
+| `WikipediaAppPage` | Launch app, skip onboarding |
+| `WikipediaSearchPage` | Search and open article |
+| `WikipediaArticlePage` | Scroll to History, save |
+| `WikipediaSavedPage` | Verify saved list |
+
+`npm run test:pom` runs ApiDemos POM only. Wikipedia uses its own config (`config/wdio.wikipedia.conf.js`).
