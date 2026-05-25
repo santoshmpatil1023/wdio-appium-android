@@ -15,27 +15,33 @@ export default class WikipediaAppPage extends BasePage {
     }
 
     async skipOnboarding() {
-        const taps = [
-            () => $('android=new UiSelector().textContains("Skip")'),
-            () => $('android=new UiSelector().text("SKIP")'),
-            () => $('id:org.wikipedia:id/fragment_onboarding_skip_button'),
-            () => $('android=new UiSelector().text("Continue")'),
-            () => $('android=new UiSelector().text("Get started")'),
-        ]
+        const skipBtn = await $('android=new UiSelector().textContains("Skip")');
 
-        for (let round = 0; round < 6; round++) {
-            for (const getEl of taps) {
-                const el = getEl()
-                if (await el.isExisting() && await el.isDisplayed()) {
-                    await el.click()
-                    await browser.pause(600)
-                }
-            }
+        if (await skipBtn.isExisting() && await skipBtn.isDisplayed()) {
+            await skipBtn.click()
+            console.log("Clicked Skip button")
+            await browser.pause(600)
+        }
 
-            const searchEntry = await $('android=new UiSelector().textContains("Search")')
-            if (await searchEntry.isExisting() && await searchEntry.isDisplayed()) {
-                return
-            }
+        const optionalBtn = await $('android=new UiSelector().className("android.view.View").instance(2)')
+        
+        if (await optionalBtn.isDisplayed()) {
+            await optionalBtn.click()
+            console.log("Clicked optional page button")
+            await browser.pause(1000)
+        }
+
+        const optionalCloseBtn = await $('~Close')
+        if (await optionalCloseBtn.isDisplayed()) {
+            await optionalCloseBtn.click()
+            console.log("Clicked optional close popup page button")
+            await browser.pause(1000)
+        }
+        console.log(" No onboarding button found - already on main screen")
+
+        const searchEntry = await $(`android=new UiSelector().resourceId("org.wikipedia:id/search_text_view")`)
+        if (await searchEntry.isExisting() && await searchEntry.isDisplayed()) {
+            return
         }
     }
 }

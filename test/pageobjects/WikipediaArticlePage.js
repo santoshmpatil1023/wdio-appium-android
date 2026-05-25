@@ -7,7 +7,11 @@ export default class WikipediaArticlePage extends BasePage {
         return $('id:org.wikipedia:id/page_save')
     }
 
-    sectionHeading(name) {
+    get sectionHeading(name) {
+        return $(`android=new UiSelector().text("${name}")`)
+    }
+
+    get popUp(name) {
         return $(`android=new UiSelector().text("${name}")`)
     }
 

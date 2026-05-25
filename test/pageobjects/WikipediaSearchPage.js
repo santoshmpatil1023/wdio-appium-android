@@ -10,31 +10,37 @@ export default class WikipediaSearchPage extends BasePage {
         return $('id:org.wikipedia:id/search_src_text')
     }
 
-    async openSearch() {
-        const entryPoints = [
-            () => this.searchContainer,
-            () => $('android=new UiSelector().textContains("Search Wikipedia")'),
-            () => $('android=new UiSelector().descriptionContains("Search")'),
-        ]
+    get openSearchInput() {
+        return $('android=new UiSelector().className("android.view.View").instance(2)')
+    }
 
-        for (const getEl of entryPoints) {
-            const el = getEl()
-            if (await el.isExisting()) {
-                await this.waitAndClick(() => el)
-                await this.searchInput.waitForDisplayed({ timeout: 10000 })
-                return
-            }
+    get openAndWait() {
+        return $('android=new UiSelector().className("android.view.View").instance(2)')
+    }
+
+    async openSearch() {
+
+        if (await this.searchContainer.isExisting()) {
+            await this.waitAndClick(this.searchContainer)
+            await this.searchInput.waitForDisplayed({ timeout: 10000 })
         }
 
         await this.searchInput.waitForDisplayed({ timeout: 10000 })
     }
 
-    async searchAndOpenArticle(term) {
+    async searchArticle(term) {
         await this.openSearch()
-        await this.waitAndSetValue(() => this.searchInput, term)
+        await this.waitAndSetValue(this.searchInput, term)
+    }
+    async OpenArticle() {
+        await this.waitAndClick(this.openSearchInput)
+        await this.searchInput.waitForDisplayed({ timeout: 10000 })
 
-        const result = await $('id:org.wikipedia:id/page_list_item_title')
-        await result.waitForDisplayed({ timeout: 15000 })
-        await this.waitAndClick(() => result)
+        const optionalCloseBtn = await $('~Close')
+        if (await optionalCloseBtn.isDisplayed()) {
+            await optionalCloseBtn.click()
+            console.log("✅ Clicked optional close popup page button")
+            await browser.pause(1000)
+        }
     }
 }

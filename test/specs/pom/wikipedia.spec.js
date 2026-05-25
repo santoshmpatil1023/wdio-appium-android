@@ -19,8 +19,11 @@ describe('POM — Wikipedia E2E', () => {
     })
 
     it('searches Selenium article, scrolls to History, saves and verifies reading list', async () => {
+        console.log('test case❤️');
+
         allure.addStep(`Search for ${data.searchTerm}`)
-        await search.searchAndOpenArticle(data.searchTerm)
+        await search.searchArticle(data.searchTerm)
+        await search.OpenArticle()
 
         allure.addStep('Scroll to History section')
         await article.waitForArticleLoaded()
@@ -29,9 +32,13 @@ describe('POM — Wikipedia E2E', () => {
         allure.addStep('Save article to reading list')
         await article.saveToReadingList()
 
-        await browser.back()
-        await browser.back()
+        await browser.pause(2000)
 
+        await browser.back()
+        await browser.pause(1500)  
+
+        await browser.back()
+        await browser.pause(1500)
         allure.addStep('Open Saved tab and verify article')
         await saved.openSavedTab()
         await saved.openDefaultReadingList()
