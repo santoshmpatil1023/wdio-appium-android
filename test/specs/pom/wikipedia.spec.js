@@ -19,7 +19,6 @@ describe('POM — Wikipedia E2E', () => {
     })
 
     it('searches Selenium article, scrolls to History, saves and verifies reading list', async () => {
-        console.log('test case❤️');
 
         allure.addStep(`Search for ${data.searchTerm}`)
         await search.searchArticle(data.searchTerm)

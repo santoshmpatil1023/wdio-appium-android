@@ -38,7 +38,7 @@ export function getWikipediaCapabilities() {
         'appium:appPackage': WIKIPEDIA.package,
         'appium:appActivity': WIKIPEDIA.activity,
         'appium:autoGrantPermissions': true,
-        'appium:noReset': true,
+        'appium:noReset': false,
     }
 
     return caps
