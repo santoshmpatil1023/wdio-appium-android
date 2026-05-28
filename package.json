@@ -16,11 +16,9 @@
   },
   "scripts": {
     "test": "wdio run ./wdio.conf.js",
-    "test:week1": "wdio run ./wdio.conf.js",
     "test:pom": "wdio run ./config/wdio.pom.conf.js",
     "test:wikipedia": "wdio run ./config/wdio.wikipedia.conf.js",
     "allure:report": "allure generate allure-results --clean -o allure-report",
-    "allure:open": "allure open allure-report",
-    "wdio": "wdio run ./wdio.conf.js"
+    "allure:open": "allure open allure-report"
   }
 }

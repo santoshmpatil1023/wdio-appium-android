@@ -19,10 +19,6 @@ export default class ArrayListPage extends BasePage {
         )
     }
 
-    rowByText(text) {
-        return $(`android=new UiSelector().text("${text}")`)
-    }
-
     get listContainer() {
         return $('android=new UiSelector().className("android.widget.ListView")')
     }

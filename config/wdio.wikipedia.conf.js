@@ -4,7 +4,6 @@ import { fileURLToPath } from 'url'
 import allure from '@wdio/allure-reporter'
 import { baseConfig } from './wdio.base.conf.js'
 import { getWikipediaCapabilities } from './app.config.js'
-import { registerCustomCommands } from '../helpers/commands.js'
 
 const projectRoot = path.join(path.dirname(fileURLToPath(import.meta.url)), '..')
 const allureResultsDir = path.join(projectRoot, 'allure-results')
@@ -22,8 +21,6 @@ export const config = {
         }],
     ],
     before: async function () {
-        registerCustomCommands()
-
         for (const dir of [
             path.join(projectRoot, 'reports/screenshots'),
             allureResultsDir,
