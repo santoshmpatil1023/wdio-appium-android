@@ -1,3 +1,5 @@
+import { getAndroidCapabilities } from './config/app.config.js'
+
 export const config = {
 
     runner: 'local',
@@ -12,21 +14,7 @@ export const config = {
 
     maxInstances: 1,
 
-    capabilities: [{
-        platformName: 'Android',
-
-        'appium:automationName': 'UiAutomator2',
-        'appium:deviceName': 'emulator-5554',
-        'appium:platformVersion': '11.0',
-        'appium:udid': 'emulator-5554',
-        'appium:app': 'C:/Users/Hp/Downloads/ApiDemos-debug.apk',
-
-        'appium:appPackage': 'io.appium.android.apis',
-        'appium:appActivity': '.ApiDemos',
-        'appium:autoGrantPermissions': true,
-        'appium:noReset': false,
-
-    }],
+    capabilities: [getAndroidCapabilities()],
 
     logLevel: 'info',
 

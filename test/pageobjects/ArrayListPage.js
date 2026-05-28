@@ -1,39 +1,52 @@
-import { $, browser } from '@wdio/globals'
-import { scrollToListTop } from '../../utils/scroll.js'
+import { $ } from '@wdio/globals'
 import ApiDemosHomePage from './ApiDemosHomePage.js'
 import BasePage from './BasePage.js'
+
+const FIRST_ARRAY_ITEM = 'Abbaye de Belloc'
 
 export default class ArrayListPage extends BasePage {
     home = new ApiDemosHomePage()
 
-    listRow(text) {
-        return browser.scrollUntilVisible(text)
+    scrollToRow(text) {
+        return $(
+            `android=new UiScrollable(new UiSelector().scrollable(true)).setMaxSearchSwipes(50).scrollIntoView(new UiSelector().text("${text}"))`,
+        )
+    }
+
+    listItem(text) {
+        return $(
+            `android=new UiSelector().className("android.widget.ListView").childSelector(new UiSelector().text("${text}"))`,
+        )
+    }
+
+    rowByText(text) {
+        return $(`android=new UiSelector().text("${text}")`)
     }
 
     get listContainer() {
         return $('android=new UiSelector().className("android.widget.ListView")')
     }
 
-    get firstVisibleRow() {
-        return $('android=new UiSelector().className("android.widget.TextView").instance(0)')
+    get firstRow() {
+        return this.listItem(FIRST_ARRAY_ITEM)
+    }
+
+    async scrollToAndTapRow(rowText, { timeout = 60000 } = {}) {
+        await this.scrollToRow(rowText).waitForExist({ timeout })
+
+        const item = this.listItem(rowText)
+        await item.waitForDisplayed({ timeout: 10000 })
+        await item.click()
     }
 
     async open() {
         await this.home.resetToHome()
         await this.home.openViews()
-        await this.waitAndClick(() => this.listRow('Lists'))
+
+        await this.scrollToAndTapRow('Lists')
+
         await this.waitAndClick(() => this.home.menuItem('01. Array'))
-        await this.listRow('Abbaye de Belloc').waitForDisplayed({ timeout: 30000 })
-    }
-
-    async scrollToAndTapRow(rowText) {
-        const row = await browser.scrollUntilVisible(rowText, { timeout: 30000 })
-        await row.click()
-    }
-
-    async longPressRow(rowText, duration = 2000) {
-        const row = await browser.scrollUntilVisible(rowText, { timeout: 30000 })
-        await browser.longPressElement(row, duration)
+        await this.listItem(FIRST_ARRAY_ITEM).waitForDisplayed({ timeout: 30000 })
     }
 
     async isListDisplayed() {
@@ -42,15 +55,18 @@ export default class ArrayListPage extends BasePage {
     }
 
     async scrollToTop() {
-        await $(scrollToListTop)
-        await this.firstVisibleRow.waitForDisplayed({ timeout: 15000 })
+        const scrollTop = $(
+            'android=new UiScrollable(new UiSelector().scrollable(true)).scrollToBeginning(13)',
+        )
+        await scrollTop.waitForExist({ timeout: 30000 })
+        await this.firstRow.waitForDisplayed({ timeout: 15000 })
     }
 
     async isFirstRowVisible() {
-        return this.firstVisibleRow.isDisplayed()
+        return this.firstRow.isDisplayed()
     }
 
     async getFirstRowText() {
-        return this.getElementText(() => this.firstVisibleRow)
+        return this.getElementText(() => this.firstRow)
     }
 }

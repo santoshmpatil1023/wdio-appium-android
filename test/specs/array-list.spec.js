@@ -1,33 +1,43 @@
 import { expect, $, browser } from '@wdio/globals'
 
 const PACKAGE = 'io.appium.android.apis'
+const FIRST_ARRAY_ITEM = 'Abbaye de Belloc'
 
 const menuItem = (label) => $(`android=new UiSelector().text("${label}")`)
 
-const listRow = (visibleText) =>
+const scrollToRow = (visibleText) =>
     $(
-        `android=new UiScrollable(new UiSelector().scrollable(true)).scrollIntoView(new UiSelector().text("${visibleText}"))`,
+        `android=new UiScrollable(new UiSelector().scrollable(true)).setMaxSearchSwipes(50).scrollIntoView(new UiSelector().text("${visibleText}"))`,
     )
+
+const listItem = (visibleText) =>
+    $(
+        `android=new UiSelector().className("android.widget.ListView").childSelector(new UiSelector().text("${visibleText}"))`,
+    )
+
+async function scrollToAndTapRow(visibleText, { timeout = 60000 } = {}) {
+    await scrollToRow(visibleText).waitForExist({ timeout })
+
+    const row = listItem(visibleText)
+    await row.waitForDisplayed({ timeout: 10000 })
+    await row.click()
+}
 
 async function openArrayListScreen() {
     await browser.startActivity(PACKAGE, '.ApiDemos')
-
     await browser.pause(2000)
 
-    const views = await menuItem('Views')
+    const views = menuItem('Views')
     await views.waitForDisplayed({ timeout: 15000 })
     await views.click()
-    console.log("✅ Views clicked")
 
-    const lists = await listRow('Lists')
-    await lists.waitForDisplayed({ timeout: 30000 })
-    await lists.click()
+    await scrollToAndTapRow('Lists')
 
-    const array = await menuItem('01. Array')
+    const array = menuItem('01. Array')
     await array.waitForDisplayed({ timeout: 30000 })
     await array.click()
 
-    await listRow('Abbaye de Belloc').waitForDisplayed({ timeout: 30000 })
+    await listItem(FIRST_ARRAY_ITEM).waitForDisplayed({ timeout: 30000 })
 }
 
 describe('ApiDemos — Views > Lists > 01. Array (Day 4)', () => {
@@ -36,27 +46,19 @@ describe('ApiDemos — Views > Lists > 01. Array (Day 4)', () => {
     })
 
     it('scrolls to Matocq, taps it, and verifies we remain on 01. Array screen', async () => {
-        const matocq = await listRow('Matocq')
-        await matocq.waitForDisplayed({ timeout: 30000 })
-        await expect(matocq).toHaveText('Matocq')
+        await scrollToAndTapRow('Matocq')
 
-        await matocq.click()
-        console.log("matocq clicked");
-
-        const listContainer = await $('android=new UiSelector().className("android.widget.ListView")')
+        const listContainer = $('android=new UiSelector().className("android.widget.ListView")')
         await listContainer.waitForDisplayed({ timeout: 10000 })
         await expect(listContainer).toBeDisplayed()
 
         await $(
-            'android=new UiScrollable(new UiSelector().scrollable(true)).scrollToBeginning(13)'
-        )
+            'android=new UiScrollable(new UiSelector().scrollable(true)).scrollToBeginning(13)',
+        ).waitForExist({ timeout: 30000 })
 
-        const firstVisibleRow = await $(
-            'android=new UiSelector().className("android.widget.TextView").instance(0)'
-        )
-        await firstVisibleRow.waitForDisplayed({ timeout: 10000 })
-        await expect(firstVisibleRow).toBeDisplayed()
-        await expect(firstVisibleRow).not.toHaveText('')
-        console.log("✅ Scrolled back to top - first visible row is present")
+        const topRow = listItem(FIRST_ARRAY_ITEM)
+        await topRow.waitForDisplayed({ timeout: 15000 })
+        await expect(topRow).toBeDisplayed()
+        await expect(topRow).toHaveText(FIRST_ARRAY_ITEM)
     })
 })

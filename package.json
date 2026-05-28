@@ -11,7 +11,8 @@
     "@wdio/spec-reporter": "^9.27.1",
     "allure-commandline": "^2.41.0",
     "appium": "^3.4.2",
-    "appium-uiautomator2-driver": "^7.5.1"
+    "appium-uiautomator2-driver": "^7.5.1",
+    "dotenv": "^17.4.2"
   },
   "scripts": {
     "test": "wdio run ./wdio.conf.js",
