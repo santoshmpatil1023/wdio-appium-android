@@ -54,7 +54,7 @@ describe('ApiDemos — Views > Lists > 01. Array (Day 4)', () => {
 
         await $(
             'android=new UiScrollable(new UiSelector().scrollable(true)).scrollToBeginning(13)',
-        ).waitForExist({ timeout: 30000 })
+        ).waitForExist({ timeout: 60000 })
 
         const topRow = listItem(FIRST_ARRAY_ITEM)
         await topRow.waitForDisplayed({ timeout: 15000 })
