@@ -2,15 +2,11 @@ import { $ } from '@wdio/globals'
 import BasePage from './BasePage.js'
 
 export default class WikipediaSavedPage extends BasePage {
-    async openSavedTab1() {
-        await this.waitAndClick(() => $('android=new UiSelector().text("Saved")'))
-    }
-
     async openSavedTab() {
-        const savedTab = await $('android:new UiSelector().text("Saved")')
+        const savedTab = await $('android=new UiSelector().text("Saved")')
         await savedTab.waitForDisplayed({ timeout: 10000 })
         await savedTab.click()
-        console.log('✅ Saved tab opened')
+        console.log('Saved tab opened')
     }
 
     async openDefaultReadingList() {
