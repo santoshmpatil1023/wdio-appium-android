@@ -39,7 +39,7 @@ export default class WikipediaSearchPage extends BasePage {
         const optionalCloseBtn = await $('~Close')
         if (await optionalCloseBtn.isDisplayed()) {
             await optionalCloseBtn.click()
-            console.log("✅ Clicked optional close popup page button")
+            console.log(" Clicked optional close popup page button")
             await browser.pause(1000)
         }
     }

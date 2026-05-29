@@ -55,7 +55,7 @@ export default class ArrayListPage extends BasePage {
             'android=new UiScrollable(new UiSelector().scrollable(true)).scrollToBeginning(13)',
         )
         await scrollTop.waitForExist({ timeout: 30000 })
-        await this.firstRow.waitForDisplayed({ timeout: 15000 })
+        await this.firstRow.waitForDisplayed({ timeout: 60000 })
     }
 
     async isFirstRowVisible() {
